@@ -3,12 +3,42 @@
 <html lang="en">
 <head>
         <link rel="stylesheet" type="text/css" href="clickbait.css">
-        <title>Click Bait</title>
+		<link rel="stylesheet" href="highscore.css">
+        <title>Click Bait: The Game!</title>
         <meta charset="utf-8">
         <meta name="keywords" content="HTML, CSS, JavaScript">
         <script src="jQuery.js"></script>
         <script src="clickbait.js"></script>
+		<script type="text/javascript" src="HighscoreAPI.js"></script>
 </head>
 <body>      
+
+	<header>ClickBait: The Game!</header>
+	<h2 id="splashText"></h2> <!-- TODO: Utilize JS to randomly select clickbait-esqe text for this /-->
+
+	<section>
+		<canvas id="gameCanvas"></canvas>
+	</section>
+
+	<section id="scoreSection">
+			<div id="highdiv">
+				<table id="hightable">
+					<tr>
+						<th>User</th>
+						<th>Score</th>
+					</tr>
+
+				</table>
+				<table id="myhightable">
+					<tr>
+						<th colspan="2">Your High Score</th>
+					</tr>
+					<tr id="myhighscore">
+						<td colspan="2">You don't have one yet!</td>
+					</tr>
+				</table>
+			</div>
+	</section>
+
 <footer></footer> 
 </body>
