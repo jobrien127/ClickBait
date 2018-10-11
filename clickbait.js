@@ -1,9 +1,15 @@
+var levelNum = 1
+
 function getRandX() {
     return Math.floor((Math.random() * 275 ) + 15)
 }
 
 function getRandY() {
     return Math.floor((Math.random() * 135 ) + 15)
+}
+
+function getNumTargets() {
+    return Math.floor(levelNum * 2.5)
 }
 
 function drawBadTarget() {
@@ -27,11 +33,14 @@ function drawGoodTarget() {
 }
 
 function drawTarget() {
-    var r = Math.random();
-    if (r <= .50){
-        drawBadTarget()
-    } else {
-        drawGoodTarget();
+    getNumTargets();
+    for (i = 0; i < numTargets; i++){
+        var r = Math.random();
+        if (r <= .50){
+            drawBadTarget()
+        } else {
+            drawGoodTarget();
+        }
     }
 }
 
