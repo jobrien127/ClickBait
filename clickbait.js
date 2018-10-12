@@ -2,7 +2,7 @@
 var clickX, clickY, // the last clicked x and y positions within the canvas
 score = 0, // user score (should be incremented)
 levelNum = 1,
-targetRadius = 5, // TODO: might need to be adjusted / calculated
+targetRadius = 7, // TODO: might need to be adjusted / calculated
 numTargets = [13, 21, 34, 55, 89], // number of targets per level
 points = [],
 goodTargets = [],
