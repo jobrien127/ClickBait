@@ -9,7 +9,8 @@ goodTargets = [],
 badTargets = [];
 
 $(document).ready(function() {
-	$("#endGameCard").hide();
+  alert("WELCOME TO CLICK BAIT: \n You have 15 seconds for each level...good luck!");
+  $("#endGameCard").hide();
 	
 	update_scores(); // Call this on page load to update high-scores list.
 	
