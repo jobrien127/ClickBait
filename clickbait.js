@@ -71,10 +71,20 @@ function runLevel(n) {
             }
             targetCounter = targetCounter + 1;
         }
+        goodTargets.splice(targetCounter, 1)
         
         // TODO: check if click within bad target
             // TODO: decrement score
             // TODO: remove target from canvas
+        targetCounter = 0;
+        for(target in badTargets) {
+            if(Math.sqrt(Math.pow((target.x-posX),2) + Math.pow((target.y-posY),2)) < (targetRadius)){
+               score = score + 5;
+               break;
+            }
+            targetCounter = targetCounter + 1;
+        }
+        badTargets.splice(targetCounter, 1)
     });
             // TODO: if timeleft <= 0 -> clear the canvas 
 }
