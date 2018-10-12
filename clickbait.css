@@ -19,6 +19,15 @@ section, header {
 
 header {
 	font-family: sans-serif;
+	text-shadow: -2px -2px 0px rgba(255,255,255,0.3), 2px 2px 0px rgba(0,0,0,0.8);
+	font: 700 50px 'Bitter';
+}
+
+#splashText {
+	text-align: center;
+	text-shadow: -1px -1px 0px rgba(255,255,255,0.3), 1px 1px 0px rgba(0,0,0,0.8);
+	color: #f05050;
+	font: 700 20px 'Bitter';
 }
 
 #levelIndicator {
@@ -29,6 +38,17 @@ header {
 
 #gameCanvas {
 	background-color: grey;
+}
+
+#endGameCard {
+	background-color: lightblue;
+	
+	position: fixed;
+	
+	width: 74%;
+	height: 200px;
+	
+	z-index: 1;
 }
 
 #startButton {
