@@ -52,8 +52,10 @@ function runLevel(n) {
 
     // TODO: need to start timer here (also need to display timer or progress bar) 
 
-    // TODO: while timer > 0 -> check for clicks (done below) 
-
+    // TODO: while timer > 0 -> check for clicks (done below)
+    var timeLeft = 15000;
+    setTimeout(endOfLevel, timeLeft); 
+      $("#timer").html("Time Left: " + timeLeft);
       // this gets the user's mouse click coordinates
       $('#gameCanvas').click(function (e) { //Offset mouse Position
         clickX = $(this).offset().left,
@@ -86,7 +88,14 @@ function runLevel(n) {
         }
         badTargets.splice(targetCounter, 1)
     });
-            // TODO: if timeleft <= 0 -> clear the canvas 
+}
+
+function endOfLevel() {
+  alert("END OF LEVEL...Your Score is Now: " + score);
+  var canvas = document.getElementById("gameCanvas");
+  var ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
 }
 
 
