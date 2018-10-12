@@ -105,7 +105,7 @@ function generatePoints(k) {
   canvasHeight = parseFloat($("#gameCanvas").css("height"));
   alert("canvas width: " + canvasWidth + "canvas height: " + canvasHeight); 
 
-  alert("entered point generator");
+  alert("entered point generator" + k);
   var placed = 0,
       maxTrys = k*10;
   while(placed < k && maxTrys > 0) {
@@ -127,7 +127,7 @@ function generatePoints(k) {
         y: y
       });
       alert("points[0].x: " + points[0].x); 
-      placed = points + 1;
+      placed = placed + 1;
     }
     maxTrys = maxTrys - 1;
   }
@@ -164,7 +164,7 @@ function drawBad(xVal, yVal) {
 }
 
 function drawTargets() {
-  for (i = 0; i < goodTargets.length; i ++) {
+  for (i = 0; i < goodTargets.length; i++) {
     drawGood(goodTargets[i].x, badTargets[i].y);
   }
   for (i = 0; i < badTargets.length; i++) {
