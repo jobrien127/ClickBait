@@ -1,6 +1,8 @@
+// TODO: need to remove debugging alerts
 var clickX, clickY, // the last clicked x and y positions within the canvas
 score = 0, // user score (should be incremented)
 levelNum = 1,
+targetRadius = 5, // TODO: might need to be adjusted / calculated
 numTargets = [12, 18, 24, 30, 36], // number of targets per level
 points = [],
 goodTargets = [],
@@ -22,8 +24,8 @@ $(document).ready(function() {
  
   run();
   
+  // TODO: highscore(score)
   // TODO: i'm assuming that if a user has a high score, then we need to get their name 
-	// TODO: highscore(score)
 	// ^^ Format for calling function to submit a potential high score.
 });
 
@@ -54,9 +56,9 @@ function runLevel(n) {
 
       // this gets the user's mouse click coordinates
       $('#gameCanvas').click(function (e) { //Offset mouse Position
-        posX = $(this).offset().left,
-        posY = $(this).offset().top;
-        alert((e.pageX - posX) + ' , ' + (e.pageY - posY)); // alert for testing click position
+        clickX = $(this).offset().left,
+        clickY = $(this).offset().top;
+        alert((e.pageX - clickX) + ' , ' + (e.pageY - clickY)); // alert for testing click position
       
         // TODO: check if click within good target
             // TODO: increment score
@@ -84,9 +86,9 @@ function generatePoints(k) {
   canvasHeight = parseFloat($("#gameCanvas").css("height"));
   alert("canvas width: " + canvasWidth + "canvas height: " + canvasHeight); 
 
-  alert("entered point gnerator");
+  alert("entered point generator");
   var placed = 0,
-      maxTrys = k*10; // should we have a max tries?
+      maxTrys = k*10;
   while(placed < k && maxTrys > 0) {
     alert("entered while loop");
     alert("canvas width: " + canvasWidth + "canvas height: " + canvasHeight); 
@@ -95,7 +97,7 @@ function generatePoints(k) {
         available = true;
         alert("generated x: " + x + "generated y: " + y);
     for(var point in points) {
-      if(Math.sqrt(Math.pow((point.x-x),2) + Math.pow((point.y-y),2)) < (2 * radius)) {
+      if(Math.sqrt(Math.pow((point.x-x),2) + Math.pow((point.y-y),2)) < (2 * targetRadius)) {
         available = false;
         break;
       }
@@ -105,9 +107,39 @@ function generatePoints(k) {
         x: x,
         y: y
       });
-      alert("points[0]: " + points[0]); 
+      alert("points[0].x: " + points[0].x); 
       placed = points + 1;
     }
     maxTrys = maxTrys - 1;
   }
 }
+
+function drawGood(xVal, yVal) {
+  var c = document.getElementById("gameCanvas");
+  var ctx = c.getContext("2d");
+  ctx.beginPath();
+  ctx.arc(xVal, yVal, targetRadius, 0, 2 * Math.PI);
+  ctx.fillStyle = "green";
+  ctx.fill();
+  ctx.stroke(); 
+}
+
+function drawBad(xVal, yVal) {
+  var c = document.getElementById("gameCanvas");
+  var ctx = c.getContext("2d");
+  ctx.beginPath();
+  ctx.arc(xVal, yVal, targetRadius, 0, 2 * Math.PI);
+  ctx.fillStyle = "red";
+  ctx.fill();
+  ctx.stroke();
+}
+
+function drawTargets() {
+  for (i = 0; i < goodTargets.length; i ++) {
+    drawGood(goodTargets[i].x, badTargets[i].y);
+  }
+  for (i = 0; i < badTargets.length; i++) {
+    drawBad(badTargets[i].x, badTargets[i].y);
+  }
+}
+
