@@ -63,6 +63,7 @@ function runLevel(n) {
         for(target in goodTargets) {
             if(Math.sqrt(Math.pow((target.x-clickX),2) + Math.pow((target.y-clcikY),2)) < (targetRadius)){
                score = score + 5;
+               drawClicked(target.x, target.y);
                break;
             }
             targetCounter = targetCounter + 1;
@@ -76,6 +77,7 @@ function runLevel(n) {
         for(target in badTargets) {
             if(Math.sqrt(Math.pow((target.x-clickX),2) + Math.pow((target.y-clickY),2)) < (targetRadius)){
                score = score - 5;
+                drawClicked(target.x, target.y);
                break;
             }
             targetCounter = targetCounter + 1;
@@ -149,6 +151,16 @@ function drawBad(xVal, yVal) {
   ctx.beginPath();
   ctx.arc(xVal, yVal, targetRadius, 0, 2 * Math.PI);
   ctx.fillStyle = "red";
+  ctx.fill();
+  ctx.stroke();
+}
+
+function drawClicked(xVal, yVal) {
+  var c = document.getElementById("gameCanvas");
+  var ctx = c.getContext("2d");
+  ctx.beginPath();
+  ctx.arc(xVal, yVal, targetRadius, 0, 2 * Math.PI);
+  ctx.fillStyle = "blue";
   ctx.fill();
   ctx.stroke();
 }
