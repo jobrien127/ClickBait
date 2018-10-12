@@ -9,6 +9,8 @@ goodTargets = [],
 badTargets = [];
 
 $(document).ready(function() {
+	$("#endGameCard").hide();
+	
 	update_scores(); // Call this on page load to update high-scores list.
 	
 	// Pick a random click-bait-y splash text
@@ -27,16 +29,21 @@ $(document).ready(function() {
 });
 
 function run() {
-  score = 0;
-  $("#startButton").click(function(){
-    if (levelNum > 5) {
-      alert("The game is over!");
-      highscore(score);
-    } else {
-    runLevel(levelNum);
-    levelNum++;
-    }
+    score = 0;
+    $("#startButton").click(function(){
+		runLevel(levelNum);
+		levelNum++;
     });
+	$("#endGameCard").dblclick(function() {
+		$(this).slideUp();
+		highscore(score);
+		
+		score = 0, // user score (should be incremented)
+		levelNum = 1,
+		points = [],
+		goodTargets = [],
+		badTargets = [];
+	});
 }
 
 function runLevel(n) {
@@ -84,11 +91,16 @@ function runLevel(n) {
 }
 
 function endOfLevel() {
-  alert("END OF LEVEL...Your Score is Now: " + score);
-  var canvas = document.getElementById("gameCanvas");
-  var ctx = canvas.getContext('2d');
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  $("#startButton").show();
+  if (levelNum > 5) {
+		$("#endGameCard").show();
+		$("#endGameCard").text("Congratulations! Your final score is: " + score + "(Double-click to continue)");
+  } else {
+	  alert("END OF LEVEL...Your Score is Now: " + score);
+	  var canvas = document.getElementById("gameCanvas");
+	  var ctx = canvas.getContext('2d');
+	  ctx.clearRect(0, 0, canvas.width, canvas.height);
+	  $("#startButton").show();
+  }
 }
 
 function generatePoints(k) {

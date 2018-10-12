@@ -40,6 +40,17 @@ header {
 	background-color: grey;
 }
 
+#endGameCard {
+	background-color: lightblue;
+	
+	position: fixed;
+	
+	width: 74%;
+	height: 200px;
+	
+	z-index: 1;
+}
+
 #startButton {
 	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 	font-size: 15px;
