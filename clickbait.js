@@ -61,6 +61,15 @@ function runLevel(n) {
         // TODO: check if click within good target
             // TODO: increment score
             // TODO: remove target from canvas
+        targetCounter = 0;
+        for(target in goodTargets) {
+            if(Math.sqrt(Math.pow((target.x-posX),2) + Math.pow((target.y-posY),2)) < (targetRadius)){
+               score = score + 5;
+               break;
+            }
+            targetCounter = targetCounter + 1;
+        }
+        
         // TODO: check if click within bad target
             // TODO: decrement score
             // TODO: remove target from canvas
