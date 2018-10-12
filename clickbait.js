@@ -96,11 +96,11 @@ function endOfLevel() {
 		$("#endGameCard").text("Congratulations! Your final score is: " + score + "(Double-click to continue)");
   } else {
 	  alert("END OF LEVEL...Your Score is Now: " + score);
-	  var canvas = document.getElementById("gameCanvas");
-	  var ctx = canvas.getContext('2d');
-	  ctx.clearRect(0, 0, canvas.width, canvas.height);
-	  $("#startButton").show();
   }
+  var canvas = document.getElementById("gameCanvas");
+  var ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  $("#startButton").show();
 }
 
 function generatePoints(k) {
