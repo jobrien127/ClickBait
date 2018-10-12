@@ -23,17 +23,19 @@ $(document).ready(function() {
   $("#splashText").text(splashString);
  
   run();
-  
-  // TODO: highscore(score)
-  // TODO: i'm assuming that if a user has a high score, then we need to get their name 
 	// ^^ Format for calling function to submit a potential high score.
 });
 
 function run() {
+  score = 0;
   $("#startButton").click(function(){
-    alert("start button clicked"); 
+    if (levelNum > 5) {
+      alert("The game is over!");
+      highscore(score);
+    } else {
     runLevel(levelNum);
     levelNum++;
+    }
     });
 }
 
@@ -47,42 +49,37 @@ function runLevel(n) {
     // TODO: for all points in both good/bad arrays draw circles with appropriate color
     drawTargets();
 
-    // TODO: while timer > 0 -> check for clicks (done below)
     var timeLeft = 15000;
     setTimeout(endOfLevel, timeLeft); 
       // this gets the user's mouse click coordinates
       $('#gameCanvas').click(function (e) { //Offset mouse Position
-        clickX = $(this).offset().left,
-        clickY = $(this).offset().top;
-        alert((e.pageX - clickX) + ' , ' + (e.pageY - clickY)); // alert for testing click position
+        var posX = $(this).offset().left,
+            posY = $(this).offset().top;
+            clickX = e.pageX - posX;
+            clickY = e.pageY - posY;
       
-        // TODO: check if click within good target
-            // TODO: increment score
-            // TODO: remove target from canvas
         targetCounter = 0;
-        for(target in goodTargets) {
-            if(Math.sqrt(Math.pow((target.x-clickX),2) + Math.pow((target.y-clcikY),2)) < (targetRadius)){
+
+        for(i = 0; i < goodTargets.length; i++) {
+            if(Math.sqrt(Math.pow((goodTargets[i].x-clickX),2) + Math.pow((goodTargets[i].y-clickY),2)) < (targetRadius)){
                score = score + 5;
-               drawClicked(target.x, target.y);
+               drawClicked(goodTargets[i].x, goodTargets[i].y);
                break;
             }
             targetCounter = targetCounter + 1;
         }
         goodTargets.splice(targetCounter, 1)
-        
-        // TODO: check if click within bad target
-            // TODO: decrement score
-            // TODO: remove target from canvas
         targetCounter = 0;
-        for(target in badTargets) {
-            if(Math.sqrt(Math.pow((target.x-clickX),2) + Math.pow((target.y-clickY),2)) < (targetRadius)){
+
+        for(i = 0; i < badTargets.length; i++) {
+            if(Math.sqrt(Math.pow((badTargets[i].x-clickX),2) + Math.pow((badTargets[i].y-clickY),2)) < (targetRadius)){
                score = score - 5;
-                drawClicked(target.x, target.y);
+               drawClicked(badTargets[i].x, badTargets[i].y);
                break;
             }
             targetCounter = targetCounter + 1;
         }
-        badTargets.splice(targetCounter, 1)
+        badTargets.splice(targetCounter, 1);
     });
 }
 
@@ -94,35 +91,35 @@ function endOfLevel() {
   $("#startButton").show();
 }
 
-
 function generatePoints(k) {
 
   var canvasWidth = parseFloat($("#gameCanvas").css("width")),
   canvasHeight = parseFloat($("#gameCanvas").css("height"));
+
   var placed = 0,
       maxTrys = k*10;
   while(placed < k && maxTrys > 0) {
     var x = Math.floor(Math.random()*(canvasWidth - 2*targetRadius)) + targetRadius,
         y = Math.floor(Math.random()*(canvasHeight - 2*targetRadius)) + targetRadius,
         available = true;
-    for(int i = 0; i < points.length; i++) {
-        alert("Point x:" + point.x + "point y:" + point.y + "clickX:" + x + "clickY:" + y)
-        if(point.x != null && point.y != null){
-            if(Math.sqrt(Math.pow((points[i].x-x),2) + Math.pow((points[i].y-y),2)) < (2 * targetRadius)) {
-                available = false;
-                break;
-            }
-        }
+
+    for(i = 0; i < points.length; i++) {
+      if(Math.sqrt(Math.pow((points[i].x-x),2) + Math.pow((points[i].y-y),2)) < (2 * targetRadius)) {
+        available = false;
+        break;
+      }
     }
     if(available) {
       points.push({
         x: x,
         y: y
       });
+
       placed = placed + 1;
     }
     maxTrys = maxTrys - 1;
   }
+
   while(points.length != 0){
       if(points.length != 0){
           goodTargets.push(points[0]);
@@ -166,9 +163,10 @@ function drawClicked(xVal, yVal) {
 }
 
 function drawTargets() {
-  alert("length of good targets: " + goodTargets.length);
+
   for (i = 0; i < goodTargets.length; i ++) {
     drawGood(goodTargets[i].x, goodTargets[i].y);
+
   }
   for (i = 0; i < badTargets.length; i++) {
     drawBad(badTargets[i].x, badTargets[i].y);
