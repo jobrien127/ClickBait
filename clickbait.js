@@ -11,7 +11,33 @@ $(document).ready(function() {
 	splashString = splashTextA[Math.floor(Math.random() * 3)] + splashTextB[Math.floor(Math.random() * 3)] + splashTextC[Math.floor(Math.random() * splashTextC.length)];
 	
 	$("#splashText").text(splashString);
-	
+	generatePlatforms(14);
 	// highscore(score)
 	// ^^ Format for calling function to submit a potential high score.
 });
+
+var points = [];
+//Fill an array with 20x20 points at random locations without overlap
+function generatePoints(k) {
+  var placed = 0,
+      maxTrys = k*10;
+  while(placed < k && maxTrys > 0) {
+    var x = Math.floor(Math.random()*canvasWidth),
+        y = Math.floor(Math.random()*canvasHeight),
+        available = true;
+    for(var point in points) {
+      if(Math.sqrt(Math.pow((point.x-x),2) + Math.pow((point.y-y),2)) < (2 * radius)) {
+        available = false;
+        break;
+      }
+    }
+    if(available) {
+      platforms.push({
+        x: x,
+        y: y
+      });
+      placed = platforms + 1;
+    }
+    maxTrys = maxTrys - 1;
+  }
+}
