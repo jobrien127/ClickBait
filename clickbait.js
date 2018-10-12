@@ -71,8 +71,9 @@ function runLevel(n) {
 
 function generatePoints(k) {
 
-  canvasWidth = $("#gameCanvas").css("width"),
-  canvasHeight = $("#gameCanvas").css("height"); 
+  var canvasWidth = $("#gameCanvas").css("width"),
+  canvasHeight = $("#gameCanvas").css("height");
+  alert("canvas width: " + canvasWidth + "canvas height: " + canvasHeight); 
 
   alert("entered point gnerator");
   var placed = 0,
