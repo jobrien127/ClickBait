@@ -1,3 +1,11 @@
+var clickX, clickY; // the last clicked x and y positions within the canvas
+var score = 0; // user score (should be incremented)
+var levelNum = 1; // current level (should be incremented)
+var numTargets = [12, 18, 24, 30, 36]; // number of targets per level
+var points = [];
+var goodTargets = [];
+var badTargets = [];
+
 $(document).ready(function() {
 	update_scores(); // Call this on page load to update high-scores list.
 	
@@ -10,14 +18,44 @@ $(document).ready(function() {
 	// -- Compile Random Splash --
 	splashString = splashTextA[Math.floor(Math.random() * 3)] + splashTextB[Math.floor(Math.random() * 3)] + splashTextC[Math.floor(Math.random() * splashTextC.length)];
 	
-	$("#splashText").text(splashString);
-	generatePlatforms(14);
-	// highscore(score)
+  $("#splashText").text(splashString);
+
+  for (i = 0; i < 5; i++) { // level loop
+    $("#startButton").click(function(){ // when start button is clicked
+
+      $("#levelIndicator").html("Level: " + levelNum);// displays current level
+      generatePoints(numTargets[levelNum - 1]); // generates non-overlapping origins
+      
+      // TODO: loop through points array and randomly pick point to be good or bad target
+          // if good -> add to goodTargets array ... else -> add to bad...
+          
+      // TODO: for all points in both good/bad arrays draw circles with appropriate color
+
+      // TODO: need to start timer here (also need to display timer or progress bar) 
+
+      // TODO: while timer > 0 -> check for clicks (done below) 
+
+        // this gets the user's mouse click coordinates
+        $('#gameCanvas').click(function (e) { //Offset mouse Position
+          posX = $(this).offset().left,
+          posY = $(this).offset().top;
+          alert((e.pageX - posX) + ' , ' + (e.pageY - posY)); // alert for testing click position
+        
+          // TODO: check if click within good target
+              // TODO: increment score
+              // TODO: remove target from canvas
+          // TODO: check if click within bad target
+              // TODO: decrement score
+              // TODO: remove target from canvas
+      });
+              // TODO: if timeleft <= 0 -> clear the canvas 
+  });
+  }
+  // TODO: i'm assuming that if a user has a high score, then we need to get their name 
+	// TODO: highscore(score)
 	// ^^ Format for calling function to submit a potential high score.
 });
 
-var points = [];
-//Fill an array with 20x20 points at random locations without overlap
 function generatePoints(k) {
   var placed = 0,
       maxTrys = k*10;
@@ -32,11 +70,11 @@ function generatePoints(k) {
       }
     }
     if(available) {
-      platforms.push({
+      points.push({
         x: x,
         y: y
       });
-      placed = platforms + 1;
+      placed = points + 1;
     }
     maxTrys = maxTrys - 1;
   }
