@@ -61,7 +61,7 @@ function runLevel(n) {
             // TODO: remove target from canvas
         targetCounter = 0;
         for(target in goodTargets) {
-            if(Math.sqrt(Math.pow((target.x-posX),2) + Math.pow((target.y-posY),2)) < (targetRadius)){
+            if(Math.sqrt(Math.pow((target.x-clickX),2) + Math.pow((target.y-clcikY),2)) < (targetRadius)){
                score = score + 5;
                break;
             }
@@ -74,8 +74,8 @@ function runLevel(n) {
             // TODO: remove target from canvas
         targetCounter = 0;
         for(target in badTargets) {
-            if(Math.sqrt(Math.pow((target.x-posX),2) + Math.pow((target.y-posY),2)) < (targetRadius)){
-               score = score + 5;
+            if(Math.sqrt(Math.pow((target.x-clickX),2) + Math.pow((target.y-clickY),2)) < (targetRadius)){
+               score = score - 5;
                break;
             }
             targetCounter = targetCounter + 1;
@@ -97,27 +97,26 @@ function generatePoints(k) {
 
   var canvasWidth = parseFloat($("#gameCanvas").css("width")),
   canvasHeight = parseFloat($("#gameCanvas").css("height"));
-  alert("canvas width: " + canvasWidth + "canvas height: " + canvasHeight); 
-
-  alert("entered point generator" + k);
   var placed = 0,
       maxTrys = k*10;
   while(placed < k && maxTrys > 0) {
-    var x = Math.floor(Math.random()*canvasWidth),
-        y = Math.floor(Math.random()*canvasHeight),
+    var x = Math.floor(Math.random()*(canvasWidth - 2*targetRadius)) + targetRadius,
+        y = Math.floor(Math.random()*(canvasHeight - 2*targetRadius)) + targetRadius,
         available = true;
-    for(var point in points) {
-      if(Math.sqrt(Math.pow((point.x-x),2) + Math.pow((point.y-y),2)) < (2 * targetRadius)) {
-        available = false;
-        break;
-      }
+    for(int i = 0; i < points.length; i++) {
+        alert("Point x:" + point.x + "point y:" + point.y + "clickX:" + x + "clickY:" + y)
+        if(point.x != null && point.y != null){
+            if(Math.sqrt(Math.pow((points[i].x-x),2) + Math.pow((points[i].y-y),2)) < (2 * targetRadius)) {
+                available = false;
+                break;
+            }
+        }
     }
     if(available) {
       points.push({
         x: x,
         y: y
       });
-      alert("points[0].x: " + points[0].x); 
       placed = placed + 1;
     }
     maxTrys = maxTrys - 1;
@@ -135,7 +134,6 @@ function generatePoints(k) {
 }
 
 function drawGood(xVal, yVal) {
-  alert("draw good");
   var c = document.getElementById("gameCanvas");
   var ctx = c.getContext("2d");
   ctx.beginPath();
@@ -146,7 +144,6 @@ function drawGood(xVal, yVal) {
 }
 
 function drawBad(xVal, yVal) {
-  alert("draw bad")
   var c = document.getElementById("gameCanvas");
   var ctx = c.getContext("2d");
   ctx.beginPath();
@@ -159,11 +156,9 @@ function drawBad(xVal, yVal) {
 function drawTargets() {
   alert("length of good targets: " + goodTargets.length);
   for (i = 0; i < goodTargets.length; i ++) {
-    alert("entered good loop");
     drawGood(goodTargets[i].x, goodTargets[i].y);
   }
   for (i = 0; i < badTargets.length; i++) {
-    alert("entered bad loop");
     drawBad(badTargets[i].x, badTargets[i].y);
   }
 }
