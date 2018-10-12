@@ -3,7 +3,7 @@ var clickX, clickY, // the last clicked x and y positions within the canvas
 score = 0, // user score (should be incremented)
 levelNum = 1,
 targetRadius = 5, // TODO: might need to be adjusted / calculated
-numTargets = [12, 18, 24, 30, 36], // number of targets per level
+numTargets = [13, 21, 34, 55, 89], // number of targets per level
 points = [],
 goodTargets = [],
 badTargets = [];
@@ -88,6 +88,8 @@ function endOfLevel() {
   var canvas = document.getElementById("gameCanvas");
   var ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  badTargets = []
+  goodTargets = []
   $("#startButton").show();
 }
 
