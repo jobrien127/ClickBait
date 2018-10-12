@@ -71,8 +71,8 @@ function runLevel(n) {
 
 function generatePoints(k) {
 
-  var canvasWidth = $("#gameCanvas").css("width"),
-  canvasHeight = $("#gameCanvas").css("height");
+  var canvasWidth = parseFloat($("#gameCanvas").css("width")),
+  canvasHeight = parseFloat($("#gameCanvas").css("height"));
   alert("canvas width: " + canvasWidth + "canvas height: " + canvasHeight); 
 
   alert("entered point gnerator");
@@ -80,7 +80,8 @@ function generatePoints(k) {
       maxTrys = k*10; // should we have a max tries?
   while(placed < k && maxTrys > 0) {
     alert("entered while loop");
-    var x = Math.floor(Math.random()*canvasWidth),// TODO: need to get the canvas width and height
+    alert("canvas width: " + canvasWidth + "canvas height: " + canvasHeight); 
+    var x = Math.floor(Math.random()*canvasWidth),
         y = Math.floor(Math.random()*canvasHeight),
         available = true;
         alert("generated x: " + x + "generated y: " + y);
