@@ -1,9 +1,10 @@
-var clickX, clickY; // the last clicked x and y positions within the canvas
-var score = 0; // user score (should be incremented)
-var numTargets = [12, 18, 24, 30, 36]; // number of targets per level
-var points = [];
-var goodTargets = [];
-var badTargets = [];
+var clickX, clickY, // the last clicked x and y positions within the canvas
+score = 0, // user score (should be incremented)
+levelNum = 1,
+numTargets = [12, 18, 24, 30, 36], // number of targets per level
+points = [],
+goodTargets = [],
+badTargets = [];
 
 $(document).ready(function() {
 	update_scores(); // Call this on page load to update high-scores list.
@@ -18,21 +19,29 @@ $(document).ready(function() {
 	splashString = splashTextA[Math.floor(Math.random() * 3)] + splashTextB[Math.floor(Math.random() * 3)] + splashTextC[Math.floor(Math.random() * splashTextC.length)];
 	
   $("#splashText").text(splashString);
-
-  for (i = 0; i < 5; i++){
-    runLevel(i + 1)
-  }
-
+ 
+  run();
+  
   // TODO: i'm assuming that if a user has a high score, then we need to get their name 
 	// TODO: highscore(score)
 	// ^^ Format for calling function to submit a potential high score.
 });
 
+function run() {
+  alert("made it ");
+  alert("level num: " + levelNum);
+  $("#startButton").click(function(){
+    alert("start button clicked"); 
+    runLevel(levelNum);
+    levelNum++;
+    });
+}
+
 function runLevel(n) {
-  $("#startButton").click(function(){ // when start button is clicked
+  // when start button is clicked
     alert("start button clicked   level num: " + n);
-    $("#levelIndicator").html("Level: " + levelNum);// displays current level
-    generatePoints(numTargets[levelNum - 1]); // generates non-overlapping origins
+    $("#levelIndicator").html("Level: " + n);// displays current level
+    generatePoints(numTargets[n - 1]); // generates non-overlapping origins
     
     // TODO: loop through points array and randomly pick point to be good or bad target
         // if good -> add to goodTargets array ... else -> add to bad...
@@ -57,17 +66,23 @@ function runLevel(n) {
             // TODO: remove target from canvas
     });
             // TODO: if timeleft <= 0 -> clear the canvas 
-});
 }
 
 
 function generatePoints(k) {
+
+  canvasWidth = $("#gameCanvas").css("width"),
+  canvasHeight = $("#gameCanvas").css("height"); 
+
+  alert("entered point gnerator");
   var placed = 0,
-      maxTrys = k*10;
+      maxTrys = k*10; // should we have a max tries?
   while(placed < k && maxTrys > 0) {
-    var x = Math.floor(Math.random()*canvasWidth),
+    alert("entered while loop");
+    var x = Math.floor(Math.random()*canvasWidth),// TODO: need to get the canvas width and height
         y = Math.floor(Math.random()*canvasHeight),
         available = true;
+        alert("generated x: " + x + "generated y: " + y);
     for(var point in points) {
       if(Math.sqrt(Math.pow((point.x-x),2) + Math.pow((point.y-y),2)) < (2 * radius)) {
         available = false;
@@ -79,6 +94,7 @@ function generatePoints(k) {
         x: x,
         y: y
       });
+      alert("points[0]: " + points[0]); 
       placed = points + 1;
     }
     maxTrys = maxTrys - 1;
