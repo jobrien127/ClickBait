@@ -122,6 +122,16 @@ function generatePoints(k) {
     }
     maxTrys = maxTrys - 1;
   }
+  while(points.length != 0){
+      if(points.length != 0){
+          goodTargets.push(points[0]);
+          points.shift();
+      }
+      if(points.length != 0){
+          badTargets.push(points[0]);
+          points.shift();
+      }
+  }
 }
 
 function drawGood(xVal, yVal) {
