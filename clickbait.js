@@ -30,8 +30,6 @@ $(document).ready(function() {
 });
 
 function run() {
-  alert("made it ");
-  alert("level num: " + levelNum);
   $("#startButton").click(function(){
     alert("start button clicked"); 
     runLevel(levelNum);
@@ -40,22 +38,18 @@ function run() {
 }
 
 function runLevel(n) {
+  $("#startButton").hide();
+
   // when start button is clicked
-    alert("start button clicked   level num: " + n);
     $("#levelIndicator").html("Level: " + n);// displays current level
     generatePoints(numTargets[n - 1]); // generates non-overlapping origins
     
-    // TODO: loop through points array and randomly pick point to be good or bad target
-        // if good -> add to goodTargets array ... else -> add to bad...
-        
     // TODO: for all points in both good/bad arrays draw circles with appropriate color
-
-    // TODO: need to start timer here (also need to display timer or progress bar) 
+    drawTargets();
 
     // TODO: while timer > 0 -> check for clicks (done below)
     var timeLeft = 15000;
     setTimeout(endOfLevel, timeLeft); 
-      $("#timer").html("Time Left: " + timeLeft);
       // this gets the user's mouse click coordinates
       $('#gameCanvas').click(function (e) { //Offset mouse Position
         clickX = $(this).offset().left,
@@ -95,7 +89,7 @@ function endOfLevel() {
   var canvas = document.getElementById("gameCanvas");
   var ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+  $("#startButton").show();
 }
 
 
@@ -109,12 +103,9 @@ function generatePoints(k) {
   var placed = 0,
       maxTrys = k*10;
   while(placed < k && maxTrys > 0) {
-    alert("entered while loop");
-    alert("canvas width: " + canvasWidth + "canvas height: " + canvasHeight); 
     var x = Math.floor(Math.random()*canvasWidth),
         y = Math.floor(Math.random()*canvasHeight),
         available = true;
-        alert("generated x: " + x + "generated y: " + y);
     for(var point in points) {
       if(Math.sqrt(Math.pow((point.x-x),2) + Math.pow((point.y-y),2)) < (2 * targetRadius)) {
         available = false;
@@ -144,6 +135,7 @@ function generatePoints(k) {
 }
 
 function drawGood(xVal, yVal) {
+  alert("draw good");
   var c = document.getElementById("gameCanvas");
   var ctx = c.getContext("2d");
   ctx.beginPath();
@@ -154,6 +146,7 @@ function drawGood(xVal, yVal) {
 }
 
 function drawBad(xVal, yVal) {
+  alert("draw bad")
   var c = document.getElementById("gameCanvas");
   var ctx = c.getContext("2d");
   ctx.beginPath();
@@ -164,10 +157,13 @@ function drawBad(xVal, yVal) {
 }
 
 function drawTargets() {
-  for (i = 0; i < goodTargets.length; i++) {
-    drawGood(goodTargets[i].x, badTargets[i].y);
+  alert("length of good targets: " + goodTargets.length);
+  for (i = 0; i < goodTargets.length; i ++) {
+    alert("entered good loop");
+    drawGood(goodTargets[i].x, goodTargets[i].y);
   }
   for (i = 0; i < badTargets.length; i++) {
+    alert("entered bad loop");
     drawBad(badTargets[i].x, badTargets[i].y);
   }
 }
